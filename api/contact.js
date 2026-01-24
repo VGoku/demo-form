@@ -25,7 +25,6 @@ export default async function handler(req, res) {
     return res.status(500).json({ message: "Database error" });
   }
 
-  // Redirect to thank-you page
   res.writeHead(302, { Location: "/thankyou.html" });
   res.end();
 }
