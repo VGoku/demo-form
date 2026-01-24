@@ -1,13 +1,9 @@
-import express from "express";
 import { createClient } from "@supabase/supabase-js";
 
-console.log("Contact.js loaded");
-
-const router = express.Router();
-
-router.post("/", async (req, res) => {
-  console.log("Route env URL:", process.env.SUPABASE_URL);
-  console.log("Route env KEY:", process.env.SUPABASE_KEY ? "YES" : "NO");
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
 
   const supabase = createClient(
     process.env.SUPABASE_URL,
@@ -30,7 +26,6 @@ router.post("/", async (req, res) => {
   }
 
   // Redirect to thank-you page
-  res.redirect("/thankyou.html");
-});
-
-export default router;
+  res.writeHead(302, { Location: "/thankyou.html" });
+  res.end();
+}
