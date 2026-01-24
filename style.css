@@ -1,0 +1,113 @@
+/* Global reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+/* Bold gradient background */
+body {
+  background: linear-gradient(135deg, #ffb56b, #de6262, #ff9966, #ff5e62);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+  color: #333;
+  padding: 40px 20px;
+}
+
+/* Smooth animated gradient */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Centered container */
+.form-container,
+.thankyou-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.15);
+  backdrop-filter: blur(6px);
+}
+
+/* Headings */
+h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #2c2c2c;
+  text-align: center;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Inputs */
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d0c7b8;
+  border-radius: 8px;
+  background: #faf8f4;
+  font-size: 16px;
+  transition: border 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #de6262;
+  outline: none;
+}
+
+/* Textarea height */
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+/* Button */
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 14px;
+  background: #de6262;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background: #c44f4f;
+  transform: translateY(-2px);
+}
+
+/* Thank-you page link */
+a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #de6262;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+a:hover {
+  background: #c44f4f;
+  transform: translateY(-2px);
+}
