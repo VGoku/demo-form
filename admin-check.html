@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Check</title>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav style="margin-bottom: 20px;">
+    <button onclick="window.location.href='index.html'">Home</button>
+    <button onclick="window.location.href='register.html'">Register</button>
+    <button onclick="window.location.href='login.html'">Login</button>
+    <button onclick="window.location.href='admin-check.html'">Admin Check</button>
+  </nav>
+
+  <h2>Checking your admin status...</h2>
+  <p id="status">Please wait...</p>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const supabase = createClient(
+      "https://cgyfugkijgjjuxhjckro.supabase.co",
+      "sb_publishable_fin9-djb1d6WIifpbSrF1Q_CjNC-u5u"
+    );
+
+    const status = document.getElementById("status");
+
+    async function checkAdmin() {
+      // Get the access token saved during login
+      const access_token = localStorage.getItem("access_token");
+
+      if (!access_token) {
+        status.textContent = "No session found. Redirecting to login...";
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1500);
+        return;
+      }
+
+      // Call your backend route (we will create this next)
+      const response = await fetch("/api/check-admin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ access_token })
+      });
+
+      const result = await response.json();
+
+      if (result.error) {
+        status.textContent = "Error: " + result.error;
+        return;
+      }
+
+      if (result.isAdmin) {
+        status.textContent = "You are an admin. Redirecting...";
+        setTimeout(() => {
+          window.location.href = "admin-dashboard.html";
+        }, 1500);
+      } else {
+        status.textContent = "You are not an admin. Redirecting...";
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
+      }
+    }
+
+    checkAdmin();
+  </script>
+
+</body>
+</html>

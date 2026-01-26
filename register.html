@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+</head>
+<body>
+  <nav style="margin-bottom: 20px;">
+  <button onclick="window.location.href='index.html'">Home</button>
+  <button onclick="window.location.href='register.html'">Register</button>
+  <button onclick="window.location.href='login.html'">Login</button>
+  <button onclick="window.location.href='admin-check.html'">Admin Check</button>
+</nav>
+  <h2>Create an Account</h2>
+
+  <form id="register-form">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Register</button>
+  </form>
+
+  <p id="message"></p>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const supabase = createClient(
+      "https://cgyfugkijgjjuxhjckro.supabase.co",
+      "sb_publishable_fin9-djb1d6WIifpbSrF1Q_CjNC-u5u"
+    );
+
+    const form = document.getElementById("register-form");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password
+      });
+
+      if (error) {
+        message.textContent = error.message;
+      } else {
+        message.textContent = "Account created! You can now log in.";
+      }
+    });
+  </script>
+</body>
+</html>
