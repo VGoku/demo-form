@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="page-contact">
+
+  <nav>
+  <button onclick="window.location.href='index.html'">Home</button>
+  <button onclick="window.location.href='register.html'">Register</button>
+  <button onclick="window.location.href='login.html'">Login</button>
+  <button onclick="window.location.href='contact.html'">Contact</button>
+</nav>
+
+  <div class="form-container">
+    <h1>Contact Us</h1>
+
+    <label>Name</label>
+    <input id="name" type="text" placeholder="Your name" />
+
+    <label>Email</label>
+    <input id="email" type="email" placeholder="Your email" />
+
+    <label>Message</label>
+    <textarea id="message" placeholder="Write your message here..."></textarea>
+
+    <button id="sendBtn" class="btn">Send Message</button>
+  </div>
+
+  <script>
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill out all fields.");
+        return;
+      }
+
+      // Send to backend (works on Vercel, 404 locally — normal)
+      try {
+        await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, message })
+        });
+      } catch (err) {
+        // Ignore local 404 — backend only works on Vercel
+      }
+
+      window.location.href = "thankyou.html";
+    });
+  </script>
+
+</body>
+</html>

@@ -1,4 +1,6 @@
-/* Global reset */
+/* --------------------------------------------------
+   GLOBAL RESET
+-------------------------------------------------- */
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +8,9 @@
   font-family: "Inter", sans-serif;
 }
 
-/* Bold gradient background */
+/* --------------------------------------------------
+   GLOBAL BACKGROUND (DEFAULT)
+-------------------------------------------------- */
 body {
   background: linear-gradient(135deg, #ffb56b, #de6262, #ff9966, #ff5e62);
   background-size: 400% 400%;
@@ -15,16 +19,57 @@ body {
   padding: 40px 20px;
 }
 
-/* Smooth animated gradient */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Centered container */
+/* --------------------------------------------------
+   PAGE-SPECIFIC THEMES
+-------------------------------------------------- */
+
+/* Home / Index */
+.page-index {
+  background: linear-gradient(135deg, #6dd5ed, #2193b0);
+}
+
+/* Login */
+.page-login {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+}
+
+/* Register */
+.page-register {
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+}
+
+/* Admin Check */
+.page-admin-check {
+  background: linear-gradient(135deg, #f6d365, #fda085);
+}
+
+/* Admin Dashboard */
+.page-admin {
+  background: linear-gradient(135deg, #84fab0, #8fd3f4);
+}
+
+/* Thank You Page */
+.page-thankyou {
+  background: linear-gradient(135deg, #ffecd2, #fcb69f);
+}
+
+/* Contact Page */
+.page-contact {
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+}
+
+/* --------------------------------------------------
+   CONTAINERS
+-------------------------------------------------- */
 .form-container,
-.thankyou-container {
+.thankyou-container,
+.card {
   max-width: 600px;
   margin: 40px auto;
   padding: 40px;
@@ -34,15 +79,18 @@ body {
   backdrop-filter: blur(6px);
 }
 
-/* Headings */
-h1 {
-  font-size: 30px;
+/* --------------------------------------------------
+   HEADINGS
+-------------------------------------------------- */
+h1, h2, h3 {
+  text-align: center;
   margin-bottom: 20px;
   color: #2c2c2c;
-  text-align: center;
 }
 
-/* Labels */
+/* --------------------------------------------------
+   LABELS & INPUTS
+-------------------------------------------------- */
 label {
   display: block;
   margin-top: 20px;
@@ -51,7 +99,6 @@ label {
   color: #444;
 }
 
-/* Inputs */
 input,
 textarea {
   width: 100%;
@@ -69,33 +116,46 @@ textarea:focus {
   outline: none;
 }
 
-/* Textarea height */
 textarea {
   height: 120px;
   resize: vertical;
 }
 
-/* Button */
-button {
+/* --------------------------------------------------
+   BUTTONS — MODERN & BEAUTIFUL
+-------------------------------------------------- */
+button,
+.btn {
   margin-top: 25px;
   width: 100%;
   padding: 14px;
-  background: #de6262;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-button:hover {
-  background: #c44f4f;
-  transform: translateY(-2px);
+button:hover,
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
 
-/* Thank-you page link */
+/* Small buttons */
+.btn-small {
+  width: auto;
+  padding: 10px 18px;
+  font-size: 15px;
+}
+
+/* --------------------------------------------------
+   LINKS
+-------------------------------------------------- */
 a {
   display: inline-block;
   margin-top: 20px;
@@ -110,4 +170,27 @@ a {
 a:hover {
   background: #c44f4f;
   transform: translateY(-2px);
+}
+
+/* --------------------------------------------------
+   NAVIGATION BAR
+-------------------------------------------------- */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+nav button {
+  width: auto;
+  padding: 10px 16px;
+  background: #333;
+  color: white;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+nav button:hover {
+  background: #555;
 }

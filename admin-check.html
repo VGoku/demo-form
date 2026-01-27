@@ -3,66 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <title>Admin Check</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
 
-  <!-- Navigation -->
-  <nav style="margin-bottom: 20px;">
-    <button onclick="window.location.href='index.html'">Home</button>
-    <button onclick="window.location.href='register.html'">Register</button>
-    <button onclick="window.location.href='login.html'">Login</button>
-    <button onclick="window.location.href='admin-check.html'">Admin Check</button>
-  </nav>
+<body class="page-admin-check">
 
-  <h2>Checking your admin status...</h2>
-  <p id="status">Please wait...</p>
+  <nav>
+  <button onclick="window.location.href='index.html'">Home</button>
+  <button onclick="window.location.href='register.html'">Register</button>
+  <button onclick="window.location.href='login.html'">Login</button>
+  <button onclick="window.location.href='contact.html'">Contact</button>
+</nav>
+
+  <div class="form-container">
+    <h1>Checking Admin Access...</h1>
+    <p style="text-align:center; margin-top:10px;">
+      Please wait while we verify your account.
+    </p>
+  </div>
 
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
     const supabase = createClient(
       "https://cgyfugkijgjjuxhjckro.supabase.co",
-      "sb_publishable_fin9-djb1d6WIifpbSrF1Q_CjNC-u5u"
+      "sb-pub-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     );
 
-    const status = document.getElementById("status");
-
     async function checkAdmin() {
-      // Get the access token saved during login
-      const access_token = localStorage.getItem("access_token");
+      const token = localStorage.getItem("access_token");
 
-      if (!access_token) {
-        status.textContent = "No session found. Redirecting to login...";
-        setTimeout(() => {
-          window.location.href = "login.html";
-        }, 1500);
+      if (!token) {
+        alert("You must be logged in.");
+        window.location.href = "login.html";
         return;
       }
 
-      // Call your backend route (we will create this next)
       const response = await fetch("/api/check-admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ access_token })
+        body: JSON.stringify({ token })
       });
 
       const result = await response.json();
 
-      if (result.error) {
-        status.textContent = "Error: " + result.error;
-        return;
-      }
-
       if (result.isAdmin) {
-        status.textContent = "You are an admin. Redirecting...";
-        setTimeout(() => {
-          window.location.href = "admin-dashboard.html";
-        }, 1500);
+        window.location.href = "admin-dashboard.html";
       } else {
-        status.textContent = "You are not an admin. Redirecting...";
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 1500);
+        alert("You are not an admin.");
+        window.location.href = "index.html";
       }
     }
 

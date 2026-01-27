@@ -3,35 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
 
-  <!-- Navigation -->
-  <nav style="margin-bottom: 20px;">
-    <button onclick="window.location.href='index.html'">Home</button>
-    <button onclick="window.location.href='register.html'">Register</button>
-    <button onclick="window.location.href='login.html'">Login</button>
-    <button onclick="window.location.href='admin-check.html'">Admin Check</button>
-  </nav>
+<body class="page-admin">
 
-  <h2>Admin Dashboard</h2>
-  <p>Welcome, Admin. You now have access to admin-only features.</p>
+  <nav>
+  <button onclick="window.location.href='index.html'">Home</button>
+  <button onclick="window.location.href='register.html'">Register</button>
+  <button onclick="window.location.href='login.html'">Login</button>
+  <button onclick="window.location.href='contact.html'">Contact</button>
+</nav>
 
-  <button id="logout">Logout</button>
+  <div class="card">
+    <h1>Admin Dashboard</h1>
+    <p style="text-align:center; margin-bottom:20px;">
+      Welcome, Admin. You now have access to admin-only tools.
+    </p>
+    <button id="logout" class="btn">Logout</button>
+  </div>
+
+  <!-- Admin Tool: View All Users -->
+  <div class="card">
+    <h3>View All Registered Users</h3>
+    <button id="loadUsers" class="btn">Load Users</button>
+    <ul id="userList" style="margin-top:15px;"></ul>
+  </div>
+
+  <!-- Admin Tool: Add New Admin -->
+  <div class="card">
+    <h3>Add New Admin</h3>
+    <label>Email Address</label>
+    <input id="newAdminEmail" type="email" placeholder="Enter user email" />
+    <button id="addAdmin" class="btn">Add Admin</button>
+    <p id="adminStatus" style="margin-top:10px; font-weight:600;"></p>
+  </div>
+
+  <!-- Future Tools Placeholder -->
+  <div class="card">
+    <h3>More Admin Tools Coming Soon</h3>
+    <p style="text-align:center;">
+      User management, message viewer, site stats, and more.
+    </p>
+  </div>
 
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
     const supabase = createClient(
       "https://cgyfugkijgjjuxhjckro.supabase.co",
-      "sb_publishable_fin9-djb1d6WIifpbSrF1Q_CjNC-u5u"
+      "sb-pub-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     );
 
-    // Logout button
+    // Logout
     document.getElementById("logout").addEventListener("click", async () => {
       await supabase.auth.signOut();
       localStorage.removeItem("access_token");
       window.location.href = "login.html";
+    });
+
+    // Load Users (admin-only)
+    document.getElementById("loadUsers").addEventListener("click", async () => {
+      const response = await fetch("/api/get-users", { method: "GET" });
+      const result = await response.json();
+
+      const list = document.getElementById("userList");
+      list.innerHTML = "";
+
+      if (!result.users || result.users.length === 0) {
+        list.innerHTML = "<li>No users found.</li>";
+        return;
+      }
+
+      result.users.forEach(u => {
+        const li = document.createElement("li");
+        li.textContent = u.email;
+        list.appendChild(li);
+      });
+    });
+
+    // Add Admin
+    document.getElementById("addAdmin").addEventListener("click", async () => {
+      const email = document.getElementById("newAdminEmail").value;
+
+      const response = await fetch("/api/add-admin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+
+      const result = await response.json();
+      document.getElementById("adminStatus").textContent = result.message;
     });
   </script>
 

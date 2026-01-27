@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Form</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
-  <nav style="margin-bottom: 20px;">
+<body class="page-index">
+
+  <nav>
   <button onclick="window.location.href='index.html'">Home</button>
   <button onclick="window.location.href='register.html'">Register</button>
   <button onclick="window.location.href='login.html'">Login</button>
-  <button onclick="window.location.href='admin-check.html'">Admin Check</button>
+  <button onclick="window.location.href='contact.html'">Contact</button>
 </nav>
 
-  <div class="form-container">
-    <h1>Contact Us</h1>
+  <div class="card">
+    <h1>Welcome to the Site</h1>
+    <p style="text-align:center; margin-bottom:20px;">
+      This is your main landing page.  
+      You can register, log in, or check admin access from here.
+    </p>
 
-    <form action="/api/contact" method="POST">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
+    <button class="btn" onclick="window.location.href='register.html'">Create Account</button>
+    <button class="btn" onclick="window.location.href='login.html'">Login</button>
+  </div>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="message">Message</label>
-      <textarea id="message" name="message" required></textarea>
-
-      <button type="submit">Send Message</button>
-    </form>
+  <div class="card">
+    <h3>About This Project</h3>
+    <p style="margin-top:10px;">
+      This site uses Supabase authentication, admin verification, and serverless backend routes.
+    </p>
   </div>
 
 </body>
