@@ -39,7 +39,6 @@
         return;
       }
 
-      // FIXED: send access_token instead of token
       const response = await fetch("/api/check-admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -51,7 +50,7 @@
       if (result.isAdmin) {
         window.location.href = "admin-dashboard.html";
       } else {
-        alert("You are not an admin.");
+        // No message, just send them to the user dashboard
         window.location.href = "user-dashboard.html";
       }
     }
