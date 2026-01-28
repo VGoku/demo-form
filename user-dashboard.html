@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="page-user">
+
+  <nav>
+    <button onclick="window.location.href='index.html'">Home</button>
+    <button onclick="window.location.href='contact.html'">Contact</button>
+    <button onclick="logout()">Logout</button>
+  </nav>
+
+  <div class="card">
+    <h1>Welcome!</h1>
+    <p id="userEmail" style="text-align:center; margin-bottom:20px;"></p>
+
+    <h3>Fun Stuff</h3>
+
+    <button class="btn" onclick="randomColor()">Random Background Color</button>
+    <button class="btn" onclick="randomFact()">Random Fun Fact</button>
+
+    <p id="factBox" style="margin-top:20px; text-align:center;"></p>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const supabase = createClient(
+      "https://cgyfugkijgjjuxhjckro.supabase.co",
+      "YOUR_REAL_SB_PUB_KEY_HERE"
+    );
+
+    async function loadUser() {
+      const token = localStorage.getItem("access_token");
+
+      if (!token) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const { data, error } = await supabase.auth.getUser(token);
+
+      if (error || !data.user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      document.getElementById("userEmail").innerText =
+        "Logged in as: " + data.user.email;
+    }
+
+    loadUser();
+
+    function logout() {
+      localStorage.removeItem("access_token");
+      window.location.href = "login.html";
+    }
+
+    function randomColor() {
+      const colors = ["#ff9a9e", "#fad0c4", "#a1c4fd", "#c2e9fb", "#fbc2eb", "#84fab0"];
+      document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function randomFact() {
+      const facts = [
+        "Honey never spoils.",
+        "Bananas are berries.",
+        "Octopuses have three hearts.",
+        "A day on Venus is longer than a year.",
+        "Butterflies taste with their feet."
+      ];
+      document.getElementById("factBox").innerText =
+        facts[Math.floor(Math.random() * facts.length)];
+    }
+  </script>
+
+</body>
+</html>
