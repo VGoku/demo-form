@@ -16,18 +16,20 @@
 </nav>
 
   <div class="form-container">
-    <h1>Login</h1>
+  <h1>Login</h1>
 
-    <label>Email</label>
+  <form id="login-form" onsubmit="return false;">
+    <label for="email">Email</label>
     <input id="email" type="email" placeholder="Enter your email" />
 
-    <label>Password</label>
+    <label for="password">Password</label>
     <input id="password" type="password" placeholder="Enter your password" />
 
-    <button id="loginBtn">Login</button>
+    <button id="loginBtn" type="submit">Login</button>
+  </form>
 
-    <a href="#" id="forgotPassword">Forgot Password?</a>
-  </div>
+  <a href="#" id="forgotPassword">Forgot Password?</a>
+</div>
 
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
