@@ -159,17 +159,17 @@
      ============================ */
 
   const soundURLs = {
-    click: "https://www.soundjay.com/buttons/sounds/button-16.mp3",
-    ding: "https://www.soundjay.com/buttons/sounds/button-10.mp3",
-    success: "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3",
-    error: "https://www.soundjay.com/buttons/sounds/button-4.mp3",
-    pew: "https://www.soundjay.com/button/sounds/beep-07.mp3"
-  };
+  click: "https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3",
+  ding: "https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3",
+  success: "https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3",
+  error: "https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3",
+  pew: "https://assets.mixkit.co/sfx/preview/mixkit-quick-win-video-game-notification-269.mp3"
+};
 
-  window.playSound = function (name) {
-    const audio = new Audio(soundURLs[name]);
-    audio.play().catch(() => {});
-  };
+window.playSound = function (name) {
+  const audio = new Audio(soundURLs[name]);
+  audio.play().catch(() => {});
+};
 
   // CONFETTI
   window.confettiBoom = function () {
