@@ -60,22 +60,22 @@
       window.location.href = "login.html";
     }
 
-    function randomColor() {
-      const colors = ["#ff9a9e", "#fad0c4", "#a1c4fd", "#c2e9fb", "#fbc2eb", "#84fab0"];
-      document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
-    }
+    window.randomColor = function () {
+  const colors = ["#ff9a9e", "#fad0c4", "#a1c4fd", "#c2e9fb", "#fbc2eb", "#84fab0"];
+  document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
+};
 
-    function randomFact() {
-      const facts = [
-        "Honey never spoils.",
-        "Bananas are berries.",
-        "Octopuses have three hearts.",
-        "A day on Venus is longer than a year.",
-        "Butterflies taste with their feet."
-      ];
-      document.getElementById("factBox").innerText =
-        facts[Math.floor(Math.random() * facts.length)];
-    }
+window.randomFact = function () {
+  const facts = [
+    "Honey never spoils.",
+    "Bananas are berries.",
+    "Octopuses have three hearts.",
+    "A day on Venus is longer than a year.",
+    "Butterflies taste with their feet."
+  ];
+  document.getElementById("factBox").innerText =
+    facts[Math.floor(Math.random() * facts.length)];
+};
   </script>
 
 </body>
