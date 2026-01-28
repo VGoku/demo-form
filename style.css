@@ -199,3 +199,44 @@ nav button {
 nav button:hover {
   background: #555;
 }
+
+/* --------------------------------------------------
+   ADMIN FUN TOOL THEMES
+-------------------------------------------------- */
+
+/* Neon Mode */
+.neon {
+  background: linear-gradient(135deg, #00f0ff, #ff00f0);
+  color: white;
+}
+
+/* Dark Mode */
+.dark {
+  background: #111;
+  color: white;
+}
+
+/* Vaporwave */
+.vaporwave {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #2c2c2c;
+}
+
+/* Retro Terminal */
+.terminal {
+  background: #001100;
+  color: #00ff00;
+  font-family: "Courier New", monospace;
+}
+
+/* Fire & Lava */
+.lava {
+  background: linear-gradient(135deg, #ff4e00, #ec9f05);
+  color: white;
+}
+
+/* Ice & Frost */
+.ice {
+  background: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+  color: #2c2c2c;
+}

@@ -4,98 +4,170 @@
   <meta charset="UTF-8" />
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body class="page-admin">
 
-  <nav>
+<nav>
   <button onclick="window.location.href='index.html'">Home</button>
   <button onclick="window.location.href='register.html'">Register</button>
   <button onclick="window.location.href='login.html'">Login</button>
   <button onclick="window.location.href='contact.html'">Contact</button>
 </nav>
 
-  <div class="card">
-    <h1>Admin Dashboard</h1>
-    <p style="text-align:center; margin-bottom:20px;">
-      Welcome, Admin. You now have access to admin-only tools.
-    </p>
-    <button id="logout" class="btn">Logout</button>
-  </div>
+<div class="card">
+  <h1>Admin Dashboard</h1>
+  <p style="text-align:center; margin-bottom:20px;">
+    Welcome, Admin. You now have access to admin-only tools.
+  </p>
+  <button id="logout" class="btn">Logout</button>
+</div>
 
-  <!-- Admin Tool: View All Users -->
-  <div class="card">
-    <h3>View All Registered Users</h3>
-    <button id="loadUsers" class="btn">Load Users</button>
-    <ul id="userList" style="margin-top:15px;"></ul>
-  </div>
+<!-- Admin Tool: View All Users -->
+<div class="card">
+  <h3>View All Registered Users</h3>
+  <button id="loadUsers" class="btn">Load Users</button>
+  <ul id="userList" style="margin-top:15px;"></ul>
+</div>
 
-  <!-- Admin Tool: Add New Admin -->
-  <div class="card">
-    <h3>Add New Admin</h3>
-    <label>Email Address</label>
-    <input id="newAdminEmail" type="email" placeholder="Enter user email" />
-    <button id="addAdmin" class="btn">Add Admin</button>
-    <p id="adminStatus" style="margin-top:10px; font-weight:600;"></p>
-  </div>
+<!-- Admin Tool: Add New Admin -->
+<div class="card">
+  <h3>Add New Admin</h3>
+  <label>Email Address</label>
+  <input id="newAdminEmail" type="email" placeholder="Enter user email" />
+  <button id="addAdmin" class="btn">Add Admin</button>
+  <p id="adminStatus" style="margin-top:10px; font-weight:600;"></p>
+</div>
 
-  <!-- Future Tools Placeholder -->
-  <div class="card">
-    <h3>More Admin Tools Coming Soon</h3>
-    <p style="text-align:center;">
-      User management, message viewer, site stats, and more.
-    </p>
-  </div>
+<!-- FUN ADMIN TOOLS -->
+<div class="card">
+  <h2>Admin Fun Tools</h2>
 
-  <script type="module">
-    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  <h3>Theme Switcher</h3>
+  <button onclick="setTheme('neon')">Neon Mode</button>
+  <button onclick="setTheme('dark')">Dark Mode</button>
+  <button onclick="setTheme('vaporwave')">Vaporwave</button>
+  <button onclick="setTheme('terminal')">Retro Terminal</button>
+  <button onclick="setTheme('lava')">Fire & Lava</button>
+  <button onclick="setTheme('ice')">Ice & Frost</button>
 
-    const supabase = createClient(
-      "https://cgyfugkijgjjuxhjckro.supabase.co",
-      "sb_publishable_fin9-djb1d6WIifpbSrF1Q_CjNC-u5u"
+  <h3 style="margin-top:20px;">Random Cat</h3>
+  <button onclick="showCat()">Show Random Cat</button>
+  <img id="funCat" style="max-width:250px; margin-top:10px; display:block;">
+
+  <h3 style="margin-top:20px;">Wisdom Generator</h3>
+  <button onclick="giveWisdom()">Give me wisdom</button>
+  <p id="wisdomBox" style="margin-top:10px;"></p>
+
+  <h3 style="margin-top:20px;">Soundboard</h3>
+  <button onclick="playSound('click')">Click</button>
+  <button onclick="playSound('ding')">Ding</button>
+  <button onclick="playSound('success')">Success</button>
+  <button onclick="playSound('error')">Error</button>
+  <button onclick="playSound('pew')">Laser Pew</button>
+
+  <h3 style="margin-top:20px;">Confetti</h3>
+  <button onclick="confettiBoom()">Confetti!</button>
+</div>
+
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  const supabase = createClient(
+    "https://cgyfugkijgjjuxhjckro.supabase.co",
+    "sb_publishable_fin9-djb1d6WIifpbSrF1Q_CjNC-u5u"
+  );
+
+  // LOGOUT
+  document.getElementById("logout").addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    localStorage.removeItem("access_token");
+    window.location.href = "login.html";
+  });
+
+  // LOAD USERS
+  document.getElementById("loadUsers").addEventListener("click", async () => {
+    const response = await fetch("/api/get-users", { method: "GET" });
+    const result = await response.json();
+
+    const list = document.getElementById("userList");
+    list.innerHTML = "";
+
+    if (!result.users || result.users.length === 0) {
+      list.innerHTML = "<li>No users found.</li>";
+      return;
+    }
+
+    result.users.forEach(u => {
+      const li = document.createElement("li");
+      li.textContent = u.email;
+      list.appendChild(li);
+    });
+  });
+
+  // ADD ADMIN
+  document.getElementById("addAdmin").addEventListener("click", async () => {
+    const email = document.getElementById("newAdminEmail").value;
+
+    const response = await fetch("/api/add-admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+
+    const result = await response.json();
+    document.getElementById("adminStatus").textContent = result.message;
+  });
+
+  /* ============================
+     FUN ADMIN TOOLS (GLOBAL)
+     ============================ */
+
+  // THEME SWITCHER
+  window.setTheme = function (theme) {
+    document.body.classList.remove(
+      "neon", "dark", "vaporwave", "terminal", "lava", "ice"
     );
+    document.body.classList.add(theme);
+  };
 
-    // Logout
-    document.getElementById("logout").addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      localStorage.removeItem("access_token");
-      window.location.href = "login.html";
+  // RANDOM CAT
+  window.showCat = async function () {
+    const res = await fetch("https://api.thecatapi.com/v1/images/search");
+    const data = await res.json();
+    document.getElementById("funCat").src = data[0].url;
+  };
+
+  // WISDOM GENERATOR
+  window.giveWisdom = function () {
+    const quotes = [
+      "You got this.",
+      "Admin powers intensify.",
+      "The code gods approve.",
+      "You are the chosen one.",
+      "Today is your day."
+    ];
+    document.getElementById("wisdomBox").innerText =
+      quotes[Math.floor(Math.random() * quotes.length)];
+  };
+
+  // SOUNDBOARD
+  window.playSound = function (name) {
+    new Audio(`sounds/${name}.mp3`).play();
+  };
+
+  // CONFETTI
+  window.confettiBoom = function () {
+    confetti({
+      particleCount: 200,
+      spread: 80,
+      origin: { y: 0.6 }
     });
-
-    // Load Users (admin-only)
-    document.getElementById("loadUsers").addEventListener("click", async () => {
-      const response = await fetch("/api/get-users", { method: "GET" });
-      const result = await response.json();
-
-      const list = document.getElementById("userList");
-      list.innerHTML = "";
-
-      if (!result.users || result.users.length === 0) {
-        list.innerHTML = "<li>No users found.</li>";
-        return;
-      }
-
-      result.users.forEach(u => {
-        const li = document.createElement("li");
-        li.textContent = u.email;
-        list.appendChild(li);
-      });
-    });
-
-    // Add Admin
-    document.getElementById("addAdmin").addEventListener("click", async () => {
-      const email = document.getElementById("newAdminEmail").value;
-
-      const response = await fetch("/api/add-admin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      });
-
-      const result = await response.json();
-      document.getElementById("adminStatus").textContent = result.message;
-    });
-  </script>
+  };
+</script>
 
 </body>
 </html>
