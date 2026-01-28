@@ -18,13 +18,22 @@
   <div class="form-container">
     <h1>Login</h1>
 
-    <!-- Proper form wrapper -->
     <form id="login-form" onsubmit="return false;">
       <label for="email">Email</label>
-      <input id="email" type="email" placeholder="Enter your email" />
+      <input 
+        id="email" 
+        type="email" 
+        placeholder="Enter your email" 
+        autocomplete="email"
+      />
 
       <label for="password">Password</label>
-      <input id="password" type="password" placeholder="Enter your password" />
+      <input 
+        id="password" 
+        type="password" 
+        placeholder="Enter your password" 
+        autocomplete="current-password"
+      />
 
       <button id="loginBtn" type="submit">Login</button>
     </form>
@@ -54,14 +63,10 @@
         return;
       }
 
-      // Save token
       localStorage.setItem("access_token", data.session.access_token);
-
-      // Go to admin-check (which now silently routes)
       window.location.href = "admin-check.html";
     });
 
-    // Forgot password
     document.getElementById("forgotPassword").addEventListener("click", async () => {
       const email = prompt("Enter your email to reset your password:");
       if (!email) return;
