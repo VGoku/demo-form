@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     }
 
     const supabase = createClient(
-        "https://your-supabase-url.supabase.co",
+        "https://cgyfugkijgjjuxhjckro.supabase.co",
         process.env.SUPABASE_SERVICE_ROLE_KEY
     );
 
