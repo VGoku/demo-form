@@ -154,18 +154,22 @@
       quotes[Math.floor(Math.random() * quotes.length)];
   };
 
-  // WEB-BASED SOUNDS (no sounds/ folder required)
-const soundURLs = {
-  click: "https://actions.google.com/sounds/v1/ui/click.ogg",
-  ding: "https://actions.google.com/sounds/v1/alarms/beep_short.ogg",
-  success: "https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg",
-  error: "https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg",
-  pew: "https://actions.google.com/sounds/v1/impacts/metal_thud_and_rattle.ogg"
-};
+  /* ============================
+     WEB-BASED SOUNDBOARD (MP3)
+     ============================ */
 
-window.playSound = function (name) {
-  new Audio(soundURLs[name]).play();
-};
+  const soundURLs = {
+    click: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_7d5f3e30d7.mp3?filename=click-124467.mp3",
+    ding: "https://cdn.pixabay.com/download/audio/2021/08/04/audio_4f3c8c1105.mp3?filename=ding-36029.mp3",
+    success: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_0e0eaa90bf.mp3?filename=success-1-6297.mp3",
+    error: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_1f2e2c932a.mp3?filename=error-126627.mp3",
+    pew: "https://cdn.pixabay.com/download/audio/2021/09/16/audio_3b5f3b30e2.mp3?filename=laser-6081.mp3"
+  };
+
+  window.playSound = function (name) {
+    const audio = new Audio(soundURLs[name]);
+    audio.play().catch(() => {});
+  };
 
   // CONFETTI
   window.confettiBoom = function () {
