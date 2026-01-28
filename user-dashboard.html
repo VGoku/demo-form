@@ -55,10 +55,11 @@
 
     loadUser();
 
-    function logout() {
-      localStorage.removeItem("access_token");
-      window.location.href = "login.html";
-    }
+    
+    window.logout = function () {
+  localStorage.removeItem("access_token");
+  window.location.href = "login.html";
+};
 
     window.randomColor = function () {
   const colors = ["#ff9a9e", "#fad0c4", "#a1c4fd", "#c2e9fb", "#fbc2eb", "#84fab0"];
