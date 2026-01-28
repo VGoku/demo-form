@@ -154,10 +154,18 @@
       quotes[Math.floor(Math.random() * quotes.length)];
   };
 
-  // SOUNDBOARD
-  window.playSound = function (name) {
-    new Audio(`sounds/${name}.mp3`).play();
-  };
+  // WEB-BASED SOUNDS (no sounds/ folder required)
+const soundURLs = {
+  click: "https://actions.google.com/sounds/v1/ui/click.ogg",
+  ding: "https://actions.google.com/sounds/v1/alarms/beep_short.ogg",
+  success: "https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg",
+  error: "https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg",
+  pew: "https://actions.google.com/sounds/v1/impacts/metal_thud_and_rattle.ogg"
+};
+
+window.playSound = function (name) {
+  new Audio(soundURLs[name]).play();
+};
 
   // CONFETTI
   window.confettiBoom = function () {
